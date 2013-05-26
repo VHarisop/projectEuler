@@ -8,18 +8,20 @@ def unplist(x: List[(Int, Int)]): List[Int] =
 
 
 
-def sieve(lim: Int) =
-	unplist(
-		(for {i <- 3 until lim by 2;
+def sieve(lim: Int, prime_array: Array[Int]) =	
+		for {i <- 2 until lim by 1;
 	     	      j <- 2*i until lim by i } 
-		yield (i, j)).toList
-	)
+		prime_array(j) = 1
+
+
+def makesieve(fun: Unit, prime_array: Array[Int]) = 
+		(for {i <- 2 until (prime_array.length - 1);
+			 if prime_array(i) == 0 }
+		yield i).toList
 	
-
-def makeSieve(mysieve: List[Int], lim: Int) =
-	(for {i <- 3 until lim by 2 if !mysieve.contains(i)} yield i).toList
-
-
-def primes(lim: Int) = 
-	makeSieve(sieve(lim), lim)
+def primes(lim: Int, pr_arr: Array[Int]) = 
+	makesieve(sieve(lim, pr_arr), pr_arr)
 	 
+
+def generate_primes(lim: Int) =
+	primes(lim, Array.fill(lim)(0))
